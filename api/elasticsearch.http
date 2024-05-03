@@ -1,0 +1,243 @@
+@baseUrlProduct = http://localhost:9200/products
+@baseUrlCustomer = http://localhost:9200/customers
+@baseUrlOrder = http://localhost:9200/orders
+
+### create index customers
+PUT http://localhost:9200/customers
+
+### create index products
+PUT http://localhost:9200/products
+
+### create index orders
+PUT http://localhost:9200/orders
+
+### delete index customers
+DELETE http://localhost:9200/customers
+
+### delete index products
+DELETE http://localhost:9200/products
+
+### delete index orders
+DELETE http://localhost:9200/orders
+
+### show all indices
+GET http://localhost:9200/_cat/indices
+
+### update dynamic mapping customers
+PUT http://localhost:9200/customers/_mapping
+Content-Type: application/json
+
+{
+    "date_detection": true,
+    "dynamic_date_formats": [
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd",
+        "yyyy/MM/dd HH:mm:ss",
+        "yyyy/MM/dd"
+    ]
+}
+
+### update dynamic mapping customers numeric detection
+PUT http://localhost:9200/customers/_mapping
+Content-Type: application/json
+
+{
+    "numeric_detection": true
+   
+}
+
+### get dynamic mapping customers
+GET http://localhost:9200/customers/_mapping
+
+### update dynamic mapping orders
+PUT http://localhost:9200/orders/_mapping
+Content-Type: application/json
+
+{
+    "date_detection": true,
+    "dynamic_date_formats": [
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd",
+        "yyyy/MM/dd HH:mm:ss",
+        "yyyy/MM/dd"
+    ]
+}
+
+### update dynamic mapping orders numeric detection
+PUT http://localhost:9200/orders/_mapping
+Content-Type: application/json
+
+{
+    "numeric_detection": true
+   
+}
+
+### get dynamic mapping orders
+GET http://localhost:9200/orders/_mapping
+
+### update dynamic mapping products
+PUT http://localhost:9200/products/_mapping
+Content-Type: application/json
+
+{
+    "date_detection": true,
+    "dynamic_date_formats": [
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd",
+        "yyyy/MM/dd HH:mm:ss",
+        "yyyy/MM/dd"
+    ]
+}
+
+### update  dynamic mapping products numeric detection
+PUT http://localhost:9200/products/_mapping
+Content-Type: application/json
+
+{
+    "numeric_detection":true
+}
+
+### get dynamic mapping products
+GET http://localhost:9200/products/_mapping
+
+### insert customers wildan
+POST http://localhost:9200/customers/_create/wildan
+Content-Type: application/json
+
+{
+    "name": "Akhmad Wildan",
+    "register_at": "2023-01-01 00:00:00"
+}
+
+
+### insert products 1
+POST http://localhost:9200/products/_create/1
+Content-Type: application/json
+
+{
+    "name": "Indomie Ayam Bawang",
+    "price": "2000"
+}
+
+### insert products 2
+POST http://localhost:9200/products/_create/2
+Content-Type: application/json
+
+{
+    "name": "Mie Sedap Soto",
+    "price": "2000"
+}
+
+### insert orders 1
+POST http://localhost:9200/orders/_create/1
+Content-Type: application/json
+
+{
+    "corder_date": "2024-05-02 00:00:00",
+    "customer_id": "wildan",
+    "total": "8000", 
+    "items": [
+        {
+            "product_id": "1",
+            "price": "2000",
+            "quantity": "2"
+        },
+        {
+            "product_id": "2",
+            "price": "2000",
+            "quantity": "2"
+        }
+    ]
+}
+
+### GET Customers Wildan
+GET  http://localhost:9200/customers/_doc/wildan
+
+### GET Source Customers Wildan
+GET  http://localhost:9200/customers/_source/wildan
+
+### Check Customers Wildan
+HEAD  http://localhost:9200/customers/_doc/wildan
+
+### Check Customers Salah
+HEAD  http://localhost:9200/customers/_doc/salah
+
+### Multiget products
+POST http://localhost:9200/products/_mget
+Content-Type: application/json
+
+{
+    "ids": [
+        "1", 
+        "2"
+    ]
+}
+
+### Search products
+POST http://localhost:9200/products/_search
+
+### Search products page 1
+POST http://localhost:9200/products/_search?size=1&from=0
+
+### Search products page 2
+POST http://localhost:9200/products/_search?size=1&from=1
+
+### Search products sort by price
+POST http://localhost:9200/products/_search?sort=price:desc
+
+### Search products sort by name : tidak bisa karena type datanya text
+POST http://localhost:9200/products/_search?sort=name:asc
+
+### Search products sort by price, name
+POST http://localhost:9200/products/_search?sort=price:desc,name:desc
+
+
+### Save products 3
+POST http://localhost:9200/products/_doc/3
+Content-Type: application/json
+
+{
+     "name": "Pop Mie Rasa Bakso",
+    "price": 2500
+}
+
+### Save products 4
+
+POST http://localhost:9200/products/_doc/4
+Content-Type: application/json
+
+{
+     "name": "Samsung Galaxy S9+",
+    "price": 20000000
+}
+
+### Save products 5
+POST http://localhost:9200/products/_doc/5
+Content-Type: application/json
+
+{
+    "name": "Acer Prodator XXI",
+    "price": 250000000
+}
+
+### Update products 5
+POST http://localhost:9200/products/_update/5
+Content-Type:  application/json
+
+{
+    "doc": {
+        "price": 300000000
+    }
+}
+
+### Insert customers spammer
+POST {{baseUrlCustomer}}/_create/spammer
+Content-Type: application/json
+
+{
+    "name": "Spammer",
+    "register_at": "2024-05-03 00:00:00"
+}
+
+### Delete customers spammer
+DELETE {{baseUrlCustomer}}/_doc/spammer
