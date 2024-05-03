@@ -1,0 +1,9 @@
+{"create": {"_index": "customers", "_id": "Joko"}}
+{"name": "Joko morro", "register_at": "2024-05-01 00:00:00"}
+{"index": {"_index": "customers", "_id": "Budi"}}
+{"name": "Budi Nugraha", "register_at": "2024-05-01 00:00:00"}
+{"update": {"_index": "products", "_id": "1"}}
+{"doc": {"price": 3000}}
+{"create": {"_index": "customers", "_id": "spammer"}}
+{"name": "Spammer", "register_at": "2024-05-01 00:00:00"}
+{"delete": {"_index": "customers", "_id": "spammer"}}
