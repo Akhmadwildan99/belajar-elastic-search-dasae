@@ -426,3 +426,204 @@ Content-Type: application/json
 ### search customer
 POST {{baseUrl}}/customer/_search
 
+### Update customers_v2 mapping
+PUT {{baseUrl}}/customers_v2/_mapping
+Content-Type: application/json
+
+{
+    "properties": {
+        "address": {
+            "properties": {
+                "streest": {
+                    "type": "text"
+                },
+                 "city": {
+                    "type": "text"
+                },
+                 "province": {
+                    "type": "text"
+                },
+                 "country": {
+                    "type": "text"
+                },
+                "zip_code": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}
+
+### bulk insert customers
+PUT {{baseUrl}}/_bulk
+Content-Type: application/json
+
+< customers-with-adress.json 
+
+### Search customer
+POST {{baseUrl}}/customer/_search
+
+### Update mapping customer
+PUT {{baseUrl}}/customers_v2/_mapping
+Content-Type: application/json
+
+{
+    "properties": {
+        "hobbies": {
+            "type": "text"
+        },
+        "banks": {
+            "properties": {
+                "name": {
+                    "type": "text"
+                },
+                "account_number": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}
+
+### bulk insert
+PUT {{baseUrl}}/_bulk
+Content-Type: application/json
+
+< customers-with-bank.json 
+
+
+### Search customer
+POST {{baseUrl}}/customer/_search
+
+### Search customer using match all
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+### Search customer using match all with paging sorting
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "match_all": {}
+    },
+    "size": 10,
+    "from": 0,
+    "sort": [
+        {
+            "username": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+### select * From customer where gender = 'Female' limit 10 offset 0 order by username desc 
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "term": {
+            "gender": "Female"
+        }
+    },
+    "size": 10,
+    "from": 0,
+    "sort": [
+        {
+            "username": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+### select * From customer where banks.name = 'BCA' limit 10 offset 0 order by username desc 
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "term": {
+            "banks.name": "BCA"
+        }
+    },
+    "size": 10,
+    "from": 0,
+    "sort": [
+        {
+            "username": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+### select * From customer where banks.name = 'BCA' limit 10 offset 0 order by username desc 
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "match": {
+            "banks.name": "BCA"
+        }
+    },
+    "size": 10,
+    "from": 0,
+    "sort": [
+        {
+            "username": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+### Search customer match query operator AND default OR
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "match": {
+            "banks.name":{
+                "query": "bca digital",
+                "operator": "AND"
+            }
+        }
+    },
+    "size": 10,
+    "from": 0,
+    "sort": [
+        {
+            "username": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+### Search customer Terms query is like in query in sql
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "terms": {
+           "username": [
+                "username1",
+                "username2",
+                "username3"
+           ]
+        }
+    }
+    
+}
