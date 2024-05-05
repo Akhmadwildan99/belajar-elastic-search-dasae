@@ -627,3 +627,152 @@ Content-Type: application/json
     }
     
 }
+
+### Search customer boolean - must query
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "term": {
+                        "hobbies": "gaming"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+### Search customer boolean -  filter
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "filter": [
+                {
+                    "term": {
+                        "hobbies": "gaming"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+### Search customer boolean - must not
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "must_not": [
+                {
+                    "term": {
+                        "hobbies": "gaming"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+### Search customer boolean - should
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bni"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+### Search customer boolean - must and should
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "hobbies": "gaming"
+                }
+            },
+            "should": [
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bni"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+### Search customer boolean - must and minimum should match
+POST {{baseUrl}}/customer/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "hobbies": "gaming"
+                }
+            },
+            "should": [
+                {
+                    "term": {
+                        "banks.name": "bca"
+                    }
+                },
+                {
+                    "term": {
+                        "banks.name": "bni"
+                    }
+                }
+            ],
+            "minimum_should_match": 2
+        }
+    }
+}
